@@ -14,7 +14,7 @@ include_directories(
 macro( add_executable_oneline name )
 
 	add_executable( ${name} ${ARGN} version.h )
-	target_link_libraries( ${name} tstools )
+	target_link_libraries( ${name} tstools m )
 
 endmacro()
 
