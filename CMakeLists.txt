@@ -147,4 +147,28 @@ add_test_oneline( test_es_unit_list test_es_unit_list.c )
 #############		INSTALL RULES				################
 ################################################################
 
-# install( TARGETS ... DESTINATION bin )
+install( TARGETS tstools DESTINATION lib )
+install( TARGETS 
+	es2ts
+	esdots
+	esfilter
+	esreport
+	esmerge
+	esreverse
+	psreport
+	psdots
+	ps2ts
+	stream_type
+	ts2es
+	ts2ps
+	tsdvbsub
+	tsinfo
+	tsreport
+	tsserve
+	ts_packet_insert
+	tsplay
+	m2ts2ts
+	pcapreport
+	tsfilter
+	DESTINATION lib 
+)
