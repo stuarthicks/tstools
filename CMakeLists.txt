@@ -170,5 +170,5 @@ install( TARGETS
 	m2ts2ts
 	pcapreport
 	tsfilter
-	DESTINATION lib 
+	DESTINATION bin 
 )
