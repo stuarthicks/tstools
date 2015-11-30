@@ -1275,7 +1275,7 @@ static void print_usage()
     "  -cnt <pid>,       Check values of continuity_counter in the specified PID.\n"
     "                    Writes all the values of the counter to a file called\n"
     "                    'continuity_counter.txt'. Turns buffering on (-b).\n"
-    "  -printcc          Prints out the continuirty counter for the packet"
+    "  -printcc          Prints out the continuity counter for the packet\n"
     "  -max <n>, -m <n>  Maximum number of TS packets to read\n"
     "  -prog <n>         Report on program <n> [default = 1]\n"
     "                    (hopefully default will be 'all' in the future)\n"
