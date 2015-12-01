@@ -204,7 +204,8 @@ static int report_buffering_stats(TS_reader_p  tsreader,
                                   int          quiet,
                                   char        *output_name,
                                   uint32_t     continuity_cnt_pid,
-                                  uint64_t     report_mask)
+                                  uint64_t     report_mask,
+                                  int          printcc)
 {
   pmt_p         pmt = NULL;
   int           err;
@@ -476,6 +477,10 @@ static int report_buffering_stats(TS_reader_p  tsreader,
       const int is_discontinuity = (adapt != NULL && (adapt[0] & 0x80) != 0);
       struct stream_data * const ss = stats + index;
 
+      if (printcc)
+        fprint_msg("CC %d\n", cc);
+
+      
       // Log if required
       if (continuity_cnt_pid == pid)
         fprintf(file_cnt, "%d%c", cc, cc == 15 ? '\n' : ' ');
@@ -1270,6 +1275,7 @@ static void print_usage()
     "  -cnt <pid>,       Check values of continuity_counter in the specified PID.\n"
     "                    Writes all the values of the counter to a file called\n"
     "                    'continuity_counter.txt'. Turns buffering on (-b).\n"
+    "  -printcc          Prints out the continuity counter for the packet\n"
     "  -max <n>, -m <n>  Maximum number of TS packets to read\n"
     "  -prog <n>         Report on program <n> [default = 1]\n"
     "                    (hopefully default will be 'all' in the future)\n"
@@ -1315,6 +1321,7 @@ int main(int argc, char **argv)
   char     *output_name = NULL;
   uint32_t  continuity_cnt_pid = INVALID_PID;
   int       req_prog_no = 1;
+  int       printcc = FALSE;
 
   uint64_t  report_mask = ~0;   // report as many bits as we get
 
@@ -1387,6 +1394,11 @@ int main(int argc, char **argv)
         report_buffering = TRUE;
         quiet = FALSE;
         ii ++;
+      }
+      else if (!strcmp("-printcc",argv[ii]))
+      {
+        report_buffering = TRUE;
+        printcc = TRUE;
       }
       else if (!strcmp("-data",argv[ii]))
       {
@@ -1494,7 +1506,7 @@ int main(int argc, char **argv)
     err = report_single_pid(tsreader,max,quiet,just_pid);
   else if (report_buffering)
     err = report_buffering_stats(tsreader,req_prog_no,max,verbose,quiet,
-                                 output_name,continuity_cnt_pid,report_mask);
+                                 output_name,continuity_cnt_pid,report_mask,printcc);
   else
     err = report_ts(tsreader,max,verbose,show_data,report_timing);
   if (err)
