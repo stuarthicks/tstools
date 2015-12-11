@@ -5,6 +5,7 @@
 build*/
 Makefile
 CMakeCache.txt
+cmakebuild/
 CMakeFiles/
 CTestTestfile.cmake
 cmake_install.cmake
